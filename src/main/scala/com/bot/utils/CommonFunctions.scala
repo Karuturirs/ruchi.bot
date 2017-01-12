@@ -4,19 +4,19 @@ package com.bot.utils
   * Created by ravi on 1/9/17.
   */
 
-import java.text.SimpleDateFormat
+
 import java.util.Date
 import java.util.Calendar
 import java.util.TimeZone
 
+import scala.io.StdIn.readLine
+
+
 object CommonFunctions {
 
-  val formattedDay = new SimpleDateFormat("dd-MM-yyyy")
-  val formattedDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-  val timezone = "PST"
 
 
-  /**Gives the date opject
+  /**Gives the date object
   *
   * @return Date object ex: Tue Jan 10 18:11:38 PST 2017
   **/
@@ -24,15 +24,15 @@ object CommonFunctions {
     new Date()
   }
 
-  /** get the current Timestamp and time(ex:11-01-2017 08:43:02) for the timezone that you specify(ex: IST)
+  /** Get the current Timestamp and time(ex:11-01-2017 08:43:02) for the timezone that you specify(ex: IST)
     *
     * @param timezone: pass what timezone, by default gives PST
     * @return string of Timestamp ex: 11-01-2017 08:43:02
     */
   def timestampForTimezone(timezone:String="PST"):String={
     println("Timezone is:"+timezone)
-    formattedDate.setTimeZone(TimeZone.getTimeZone(timezone))
-    formattedDate.format(date)
+    Constants.formattedDate.setTimeZone(TimeZone.getTimeZone(timezone))
+    Constants.formattedDate.format(date)
   }
 
   /** Gives you today date
@@ -41,7 +41,7 @@ object CommonFunctions {
     */
 
   def today():String ={
-    formattedDay.format(date());
+    Constants.formattedDay.format(date())
   }
 
   /**Gives tomorrow date
@@ -64,8 +64,30 @@ object CommonFunctions {
   def daysToAdd(n:Int,timezone:String="PST"):String={
     val c = Calendar.getInstance()
     c.add(Calendar.DATE, n);  // number of days to add
-    formattedDay.setTimeZone(TimeZone.getTimeZone(timezone))
-    formattedDay.format(c.getTime())
+    Constants.formattedDay.setTimeZone(TimeZone.getTimeZone(timezone))
+    Constants.formattedDay.format(c.getTime())
+  }
+
+  /*
+  def validate(content:String, regex:String): Boolean =  if(content.matches(regex)) true else false
+  def datevalidate:(String, String) => Boolean = validate
+  */
+
+  /** A recursive function that check the content with the regex string  for the user input and
+    * returns the message to the user to enter proper content recursively
+    *
+    * @param content : Input string that needs to be matched
+    * @param regex : matches pattern string
+    * @param msg : msg to display to user for re-entering the input content
+    * @return : content if matched
+    */
+  @annotation.tailrec
+  def userInputValidate(content:String , regex:String, msg:String):String={
+    if(content.matches(regex))content
+    else{
+      val reinputdata = readLine(msg+"\n")
+      userInputValidate(reinputdata,regex,msg)
+    }
   }
 
 }

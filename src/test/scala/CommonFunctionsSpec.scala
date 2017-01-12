@@ -38,8 +38,18 @@ class CommonFunctionsSpec extends FlatSpec{
   }
 
   it should "Give me tomorrow date" in{
+    val day = ddf.format(new Date())
+    val cc = day.split("-")(0)
+    val cur = day.replaceFirst(cc , (cc.toInt+1).toString)
+    assert(CommonFunctions.tomorrow == cur)
 
-    assert(CommonFunctions.tomorrow == "11-01-2017")
+  }
+
+  it should "Give me date after 5days" in{
+    val day = ddf.format(new Date())
+    val cc = day.split("-")(0)
+    val cur = day.replaceFirst(cc , (cc.toInt+5).toString)
+    assert(CommonFunctions.daysToAdd(5) == cur)
 
   }
 

@@ -2,30 +2,33 @@
   * Created by ravi on 1/9/17.
   */
 
-import scala.io.StdIn.{readLine,readInt}
+import com.bot.utils.CommonFunctions
 
-object ruchi {
+import scala.io.StdIn.{readInt, readLine}
 
-  def main(args: Array[String]): Unit = {
+object ruchi extends App {
 
-  }
-
+  remindme
 
   def remindme():Unit ={
     val desc = readLine("Hello, What should I remind you about?\n")
     val when = readLine("On which Date?\n").toLowerCase
+    var day:String = when match{
+      case "today" => CommonFunctions.today()
+      case "tomorrow" => CommonFunctions.tomorrow()
+      case _ =>{
+        val datemsg = "Not a proper input \nPlease enter Date in dd-mm-yyyy format:"
+        CommonFunctions.userInputValidate(when,"\\d{2}-\\d{2}-\\d{4}",datemsg)
+      }
 
-    when match{
-      case "today" =>
-      case "tomorrow" =>
-      case _ =>
     }
-    val time = readLine("At what Time(HH:MM:SS)?\n")
-    val con = s"I will remind you on $when ,$time Regarding $desc\n  Can I Confirm?\n"
-    val check = readLine(con)
+    val timemsg = "Not a proper input \nPlease enter Time in HH:MM:SS format:"
+    val time = CommonFunctions.userInputValidate(readLine("At what Time(HH:MM:SS)?\n"),"\\d{2}:\\d{2}:\\d{2}",timemsg)
+    val con = s"I will remind you on $day ,$time Regarding $desc\n  Can I Confirm, Yes|No?\n"
+    val check = readLine(con).toLowerCase()
 
     check match {
-      case "YES" | "yes" | "Yes" | "OK" | "Ok" | "ok" => println("THANKS. Saved your reminder")
+      case "yes"  | "ok" => println("THANKS. Saved your reminder")
       case  _ => println("your reminder not saved. Try again if you need.")
     }
   }
