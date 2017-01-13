@@ -14,10 +14,13 @@ lazy val testDependencies = Seq (
 lazy val cassandraDependencies = Seq (
   "com.datastax.cassandra" % "cassandra-driver-core" % "2.1.2"
 )
+lazy val configTypeSafeDependencies = Seq(
+  "com.typesafe" % "config" % "1.2.1"
+)
 
 lazy val coreApp = project.in(file("coreApp"))
   .settings(commonSettings:_*)
-  .settings(libraryDependencies ++= (testDependencies ++ cassandraDependencies))
+  .settings(libraryDependencies ++= (testDependencies ++ cassandraDependencies ++ configTypeSafeDependencies))
 
 lazy val webApp = project.in(file("webApp"))
   .settings(commonSettings:_*)
