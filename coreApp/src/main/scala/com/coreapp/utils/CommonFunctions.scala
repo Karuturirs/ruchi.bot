@@ -91,6 +91,17 @@ object CommonFunctions {
     }
   }
 
+
+  @annotation.tailrec
+  def userInputTimeValidate(content:String, regex:String, msg:String):String={
+    val millisec = CommonFunctions.timeDiffFromNoW(content, regex)
+    if( millisec > 0)content
+    else{
+      val reinputdata = readLine(msg+"\n")
+      userInputTimeValidate(reinputdata, regex, msg)
+    }
+  }
+
   /** toDate function gives Date object for give date string and its format
     *
     * @param date : String of input date
