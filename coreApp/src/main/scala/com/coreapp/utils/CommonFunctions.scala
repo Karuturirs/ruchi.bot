@@ -91,7 +91,13 @@ object CommonFunctions {
     }
   }
 
-
+  /** Validate given usertime to a future date from now. if not ask user to enter future date recurcively
+    *
+    * @param content : Input string that needs to be matched
+    * @param regex : matches pattern string
+    * @param msg : msg to display to user for re-entering the input content
+    * @return : content if matched
+    */
   @annotation.tailrec
   def userInputTimeValidate(content:String, regex:String, msg:String):String={
     val millisec = CommonFunctions.timeDiffFromNoW(content, regex)

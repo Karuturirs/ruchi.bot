@@ -23,3 +23,9 @@ CREATE TABLE IF NOT EXISTS remindme (
 			PRIMARY KEY (notifytime)
 );
 CREATE INDEX ON remindme (id);
+
+INSERT INTO remindme (notifytime,email,id,todo) VALUES ('2017-01-14 23:25:00','sankar005ravi@gmail.com','rbox','hello') USING TTL 108101;
+
+SELECT dateof(now()) FROM system.local ;
+
+select id,ttl(id) from remindme ;

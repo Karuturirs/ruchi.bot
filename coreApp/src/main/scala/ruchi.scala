@@ -52,14 +52,13 @@ object ruchi extends App {
         val uri = CassandraConnectionUri(conf.getString("core.db.cassandra.uri"))
         val session = Helper.createSessionAndInitKeyspace(uri)
         val millisec = CommonFunctions.timeDiffFromNoW(notifytime, Constants.DATE_FORMAT+" HH:mm:ss")
-        val userdateobj = CommonFunctions.dateInMillsec(notifytime, Constants.DATE_FORMAT+" HH:mm:ss")
-        println(userdateobj+"--->")
-        val tsc = Timestamp.valueOf(notifytime)
+
         try {
-          session.execute("INSERT INTO remindme (notifytime,email,id,todo) VALUES (dateof(now())," + email + "," + id + "," + desc + ") USING TTL " + millisec + ";")
+          val insertquery = "INSERT INTO remindme (notifytime,email,id,todo) VALUES ('"+notifytime + "','"+ email + "','" + id + "','" + desc +"') USING TTL " + millisec + ";"
+          println(insertquery)
+          session.execute(insertquery)
           println(s"${id.toUpperCase}, Reminder Saved.")
         }catch{
-
             case e:Exception => {println("ERROR :: Your reminder not saved. Try again if you need."+e.getMessage)
             e.printStackTrace()}
           }
