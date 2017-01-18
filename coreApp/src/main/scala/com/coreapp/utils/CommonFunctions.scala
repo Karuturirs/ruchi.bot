@@ -141,6 +141,17 @@ object CommonFunctions {
     * @return : +ve Long (millisecs) then date is future
     *           -ve Long (millisecs) then date is past
     */
-  def timeDiffFromNoW(date:String , format:String):Long =  dateInMillsec(date,format) - (new Date()).getTime
+  def timeDiffFromNoW(date:String , format:String):Long = {
+    val x = dateInMillsec(date, format)
+    val y = (new Date()).getTime
+    println(x+"-"+y)
+    x-y
+  }
+
+
+  def convertTimeOnTimezone(time:String, outputtimezone:String , inputtimezone:String="PST"): String ={
+    Constants.FORMATTED_TIMESTAMP.setTimeZone(TimeZone.getTimeZone(outputtimezone))
+    Constants.FORMATTED_TIMESTAMP.format(Constants.FORMATTED_TIMESTAMP.parse(time))
+  }
 
 }

@@ -1,3 +1,4 @@
+TODO Items:
 1.Unit test cases for new added common functions
-2.Not able to run scala files in intellij ide
+2.Not able to run scala files in intellij idea
 3.Cassandra Insert timestamp doesnot match to PST
